@@ -1,0 +1,35 @@
+
+
+services:
+  db:
+    container_name: donation_db
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=devkiki
+      - POSTGRES_PASSWORD=devkiki77
+      - POSTGRES_DB=donation
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+
+  pgadmin:
+    container_name: donation_admin
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=pgadmin4
+    ports:
+      - '5050:80'
+    depends_on:
+      - db
+
+#  app:
+#    container_name: donation_api
+#    build: .
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      - db
